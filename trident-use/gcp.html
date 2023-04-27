@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head class="at-element-marker">
+  <title>Configurer un système Cloud Volumes Service pour Google Cloud backend</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Configurer un système Cloud Volumes Service pour Google Cloud backend" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/fr-fr/trident-2301/trident-use/gcp.html" />
+	<meta property="og:description" content="Découvrez comment configurer Cloud Volumes Service pour Google Cloud en tant que backend pour votre installation d"Astra Trident à l"aide des exemples de con..." />
+  <meta property="og:image" content="https://docs.netapp.com/fr-fr/trident-2301/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="Découvrez comment configurer Cloud Volumes Service pour Google Cloud en tant que backend pour votre installation d"Astra Trident à l"aide des exemples de con...">
+  <meta name="keywords" content=" trident backend, cloud volumes service for google cloud platform, google cloud platform, gcp, storage pool labels, storage pool, cvs, cvs-performance, service type, service level, cloud volumes service, cloud volumes"><!-- Icons -->
+  <link rel="icon" href="/fr-fr/trident-2301/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+  <!-- Elastic Search -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/searchkit/0.10.0/theme.css">
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/fr-fr/trident-2301/css/netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/fr-fr/trident-2301/css/landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/fr-fr/trident-2301/css/tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel="canonical" href="https://docs.netapp.com/fr-fr/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.netapp.com/us-en/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="fr" href="https://docs.netapp.com/fr-fr/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="en" href="https://docs.netapp.com/us-en/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="ja" href="https://docs.netapp.com/ja-jp/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="ko" href="https://docs.netapp.com/ko-kr/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://docs.netapp.com/zh-cn/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://docs.netapp.com/zh-tw/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="de" href="https://docs.netapp.com/de-de/trident-2301/trident-use/gcp.html" />
+  <link rel="alternate" hreflang="es" href="https://docs.netapp.com/es-es/trident-2301/trident-use/gcp.html" />
+  <link rel='stylesheet' href='/fr-fr/trident-2301/css/na-feature.css' type='text/css'><!-- Top level site integrations --><script>
+    function addAdobeLaunch(adobeId) {
+      var head = document.getElementsByTagName('head')[0];
+      var adobe = document.createElement("script");
+      adobe.type = "text/plain";
+      adobe.className = "optanon-category-C0002";
+      adobe.src = "//assets.adobedtm.com/60287eadf1ee/c284da483c83/"+adobeId+".min.js";
+      head.appendChild(adobe);
+    }
+
+    function addGoogleAnalytics(gtagId) {
+      var google = document.createElement("script");
+      google.type = "text/plain";
+      google.className = "optanon-category-C0002";
+      google.src = "https://www.googletagmanager.com/gtag/js?id="+gtagId;
+      var head = document.getElementsByTagName('head')[0];
+      head.appendChild(google);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gtagId);
+    }
+
+    function addConsent(consentId) {
+      var head = document.getElementsByTagName('head')[0];
+      var onetrustConsent = document.createElement("script");
+      onetrustConsent.type = "text/javascript";
+      onetrustConsent.src = "https://cdn.cookielaw.org/consent/"+consentId+"/OtAutoBlock.js";
+      head.appendChild(onetrustConsent);
+
+      var onetrustScript = document.createElement("script");
+      onetrustScript.type = "text/javascript";
+      onetrustScript.src = "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js";
+      onetrustScript.charset = "UTF-8";
+      onetrustScript.dataset.documentLanguage = "true";
+      onetrustScript.dataset.domainScript = consentId;
+      head.appendChild(onetrustScript);
+    }addConsent("72570c5c-fe30-465f-b0e0-b77f7fb4ae34");
+    addAdobeLaunch("launch-e9ff3acac59f");
+    addGoogleAnalytics("UA-81697994-3");function OptanonWrapper() { }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/fr-fr/trident-2301/js/na-search.js'></script><script src='/fr-fr/trident-2301/js/na-pagenav.js'></script><script src='/fr-fr/trident-2301/js/na-utility.js'></script>
+ <!--  
+  <link rel='stylesheet' href='/fr-fr/trident-2301/css/prism.css' type='text/css'>
+  <link rel='stylesheet' href='/fr-fr/trident-2301/css/prism-netapp.css' type='text/css'>
+ -->
+
+  <!-- <script src='/fr-fr/trident-2301/js/na-utility.js'></script> -->
+  <script src='/fr-fr/trident-2301/js/clouddocs.js'></script>
+  <script src='/fr-fr/trident-2301/js/jquery.navgoco.min.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- <script src='/fr-fr/trident-2301/js/toc.js'></script> -->
+  <!-- <script src='/fr-fr/trident-2301/js/customscripts.js'></script> --><script>
+      $(document).ready(function() {
+          
+          var collapseOnInit = true;
+          
+
+          var navSettings = {
+              "caretHtml": '',
+              "accordion": collapseOnInit,
+              "openClass": 'active', // open
+              "save": false, // leave false or nav highlighting doesn't work right
+              "cookie": {
+                  "name": 'navgoco',
+                  "expires": false,
+                  "path": '/'
+              },
+              "slide": {
+                  "duration": 400,
+                  "easing": 'swing'
+              }
+          };
+
+          // Initialize navgoco with default options
+          $("#mysidebar").navgoco(navSettings);
+          
+
+          $("#collapseAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', false);
+          });
+
+          $("#expandAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', true);
+          });
+
+          $(".sidebar-nav-container").on("scroll", function() {
+            $.cookie("sidebarScroll", $(".sidebar-nav-container").scrollTop(), {
+              path    : "/fr-fr/trident-2301"  
+            });
+          });
+          $(function() {
+            if ($.cookie("sidebarScroll")) {
+              $(".sidebar-nav-container").scrollTop($.cookie("sidebarScroll"));
+            }
+          });
+
+      });
+
+  </script>
+  <script>
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+  </script>
+  <script src='/fr-fr/trident-2301/js/custom-dropdown.js'></script>
+  <script src='/fr-fr/trident-2301/js/FileSaver.min.js'></script>
+  <script src='/fr-fr/trident-2301/js/jszip-utils.min.js'></script>
+  <script src='/fr-fr/trident-2301/js/jszip.min.js'></script>
+  <!-- <script src='/fr-fr/trident-2301/js/pdf-ux.js'></script> -->
+</head>
+
+
+  <body class role="document" data-flavor="">
+    <div id="page" class="n-off-canvas-menu">
+      <div class="n-off-canvas-menu__menu"><!--TODO: Add offcanvas code --></div>
+      <div class="n-off-canvas-menu__content-wrap">
+        <header class="site-header" id="banner">
+  
+  <!-- Start Page Toolbar -->
+  
+  <div class="page-nav-toolbar"><div id="version-dropdown-new" class="custom-dropdown" >
+  <div class="custom-dropdown-select unselected" title="Astra Trident 23.01">
+    <label>Version</label>
+    <span translate="no" class="notranslate">Astra Trident 23.01</span>
+    <img src="/fr-fr/trident-2301/images/chevron_up.svg" alt="" class="custom-icon chevrondown invisible" />
+    <img src="/fr-fr/trident-2301/images/chevron_down.svg" alt="" class="custom-icon chevronup" />
+  </div>
+
+  <ul class="custom-dropdown-menu"><li>
+      
+      <a href="https://docs.netapp.com/fr-fr/trident/trident-use/gcp.html" target="_self">
+        <span translate="no" class="notranslate"><span>Astra Trident</span><span class="version"> 23.01</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/fr-fr/trident-2210/trident-use/gcp.html" target="_self">
+        <span translate="no" class="notranslate"><span>Astra Trident</span><span class="version"> 22.10</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/fr-fr/trident-2207/trident-use/gcp.html" target="_self">
+        <span translate="no" class="notranslate"><span>Astra Trident</span><span class="version"> 22.07</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/fr-fr/trident-2204/trident-use/gcp.html" target="_self">
+        <span translate="no" class="notranslate"><span>Astra Trident</span><span class="version"> 22.04</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/fr-fr/trident-2201/trident-use/gcp.html" target="_self">
+        <span translate="no" class="notranslate"><span>Astra Trident</span><span class="version"> 22.01</span></span>
+      </a>
+                     
+    </li>
+    
+  </ul>
+</div><div class="page-nav-contribute"><a target="_blank" href="https://github.com/NetAppDocs/trident-2301/issues/new?body=Page%3A%20[Configurer un système Cloud Volumes Service pour Google Cloud backend](https://docs.netapp.com/fr-fr/trident-2301/trident-use/gcp.html)&template=public-issue-template.md" class="page-nav-contribute-link" role="button"><img src="/fr-fr/trident-2301/images/discuss-sm.svg" alt="" class="github-icon" />Demander de modifier un document</a><a target="_blank" href="https://github.com/NetAppDocs/trident-2301/blob/main/trident-use/gcp.adoc" class="page-nav-contribute-link" role="button"><img src="/fr-fr/trident-2301/images/edit-sm.svg" alt="" class="github-icon" />Modifier sur GitHub</a><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  ><img src="/fr-fr/trident-2301/images/article-sm.svg" alt="" class="github-icon" />Guide des contributeurs</a></div>
+    <div class="page-nav-container">
+      <nav class="page-nav-fixed">
+        <div class="page-nav-title">SUR CETTE PAGE</div>
+        <div class="page-nav-links">
+          <ul class="page-nav-inner" id="page-menu"></ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
+  
+  <!-- Start top_hat -->
+  <div class="n-top-hat">
+    <div class="n-container">
+      <div class="n-top-hat__cross-property-nav">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/products-a-z/" class="n-top-hat__link">Produits et solutions</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/support-and-training/netapp-university/" class="n-top-hat__link">Support et formation</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://cloud.netapp.com" class="n-top-hat__link">Cloud Central</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://community.netapp.com/" class="n-top-hat__link">Communauté</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://blog.netapp.com/" class="n-top-hat__link">Blog</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://customers.netapp.com/en/" class="n-top-hat__link">Témoignages clients</a>
+          </li>
+        </ul>
+      </div>
+      <div class="n-top-hat__utils">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/company/contact-us/" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End top_hat -->
+
+  <!-- Start property bar -->
+  <style>
+    .n-property-navigation-bar__menus--desktop-experience .n-menu--mega__default-content__heading span {
+    color: #34B0FF;
+    }
+  </style>
+  <div class="n-property-bar " data-ntap-ui="sticky-nav">
+    <div class="n-property-bar__inner-wrap">
+      <div class="n-property-bar__menu-toggle">
+        <a href="#" class="n-property-bar__menu-toggle-link">
+          <span class="n-property-bar__menu-toggle-text">Menu</span>
+          <svg class="n-icon-bars n-property-bar__menu-toggle-icon" aria-labelledby="title">
+            <title>bars</title>
+            <use xlink:href="/fr-fr/trident-2301/images/sprite.svg#bars"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="n-property-bar__property-mark ">
+        <a href="https://www.netapp.com" class="n-property-bar__property-link">
+          <div class="n-property-bar__logo">
+            <svg class="n-icon-netapp-mark n-icon-netapp-mark n-property-bar__netapp-mark-icon" aria-labelledby="title">
+              <title>netapp-mark</title>
+              <use xlink:href="/fr-fr/trident-2301/images/sprite.svg#netapp-mark"></use>
+            </svg>
+            <svg class="n-icon-netapp-logo n-property-bar__logo-svg" aria-labelledby="title">
+              <title>netapp-logo</title>
+              <use xlink:href="/fr-fr/trident-2301/images/sprite.svg#netapp-logo"></use>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      
+      
+      
+      <div class="search-property-bar">
+        <div id="search-demo-container" class="searchbox n-property-bar__search">
+          <div id="react-search" 
+          data-search-html="/fr-fr/trident-2301/search.html"
+          data-type="widget" 
+          data-placeholder="Rechercher une documentation"
+          data-no-results-found="Aucun résultat n'a été trouvé pour {query}"
+          data-did-you-mean="Rechercher {suggestion}."
+          data-no-results-found-did-you-mean="Aucun résultat n’a été trouvé pour {query}. Voulez-vous dire {suggestion} ?"
+          data-results-found="{hitCount} résultats trouvés"
+          data-error-message="We're sorry, an issue occurred when fetching your results. Please try again."
+          data-error-reset="Reset Search"
+          data-sk-es-pf-indexes=""
+          data-flavor=""></div>
+          <button class="n-property-bar__search-toggle-button" type="button">
+            <svg class="n-icon-search n-property-bar__search-toggle-button-icon" aria-labelledby="title">
+              <title>search</title>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/fr-fr/trident-2301/images/sprite.svg#search"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="n-property-bar__toolbar">
+    <!-- Start Language Selector --><div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+      <div class="custom-dropdown-select custom-dropdown-select-lang">
+      <span class="lang-name">Français</span>
+          <svg class="n-globe__icon" aria-labelledby="title">
+            <title>globe</title>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/fr-fr/trident-2301/images/sprite.svg#globe"></use>
+          </svg>
+        </button>
+      </div>
+
+      <ul class="custom-dropdown-menu"><li>
+          <a href="https://docs.netapp.com/fr-fr/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">Français</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/us-en/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">English</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/ja-jp/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">日本語</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/ko-kr/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">한국어</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/zh-cn/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/zh-tw/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/de-de/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/es-es/trident-2301/trident-use/gcp.html" target="_self"><span translate="no" class="notranslate">Español</span></a>
+        </li></ul>
+    </div>
+    <!-- End Language Selector -->
+
+    <div class="n-property-bar__cta"></div>
+  </div>
+  <!-- End property bar -->
+</header>
+
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+  <!-- Sidebar Column -->
+  
+  <div class="col-md-3" id="sidebar-height">
+      <button id="btn-sidebar-collapse" onclick="hideSidebar()"><img src="/fr-fr/trident-2301/images/collapse.png" alt="Réduire le panneau de navigation"></button>
+      <div class="n-pdf-header">
+  <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+    <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>PDFs disponibles<span>
+    </span>
+  </a>
+</div>
+<div class="n-pdf-body-container">
+  <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+        
+        
+        
+        <a target="_blank" href="/fr-fr/trident-2301/pdfs/fullsite-sidebar/Documentation_d_Astra_Trident_23_01_1.pdf" >
+          <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>PDF de ce site de documentation</a>
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Concepts.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Concepts
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Commencez.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Commencez
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Installer_Astra_Trident.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Installer Astra Trident
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Installer_à_l_aide_de_l_opérateur_Trident.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Installer à l'aide de l'opérateur Trident
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Installation_à_l_aide_de_tridentctl.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Installation à l'aide de tridentctl
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Gérez_Astra_Trident.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Gérez Astra Trident
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Mettez_à_niveau_Astra_Trident.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Mettez à niveau Astra Trident
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Avec_Astra_Trident.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Avec Astra Trident
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Configuration_des_systèmes_back_end.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Configuration des systèmes back-end
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Azure_NetApp_Files.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Azure NetApp Files
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Pilotes_SAN_de_ONTAP.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Pilotes SAN de ONTAP
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Pilotes_NAS_ONTAP.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Pilotes NAS ONTAP
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Amazon_FSX_pour_NetApp_ONTAP.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Amazon FSX pour NetApp ONTAP
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Réaliser_des_opérations_de_volume.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Réaliser des opérations de volume
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Astra_Trident_pour_Docker.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Astra Trident pour Docker
+          </a>
+          
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Utilisation_de_volumes.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Utilisation de volumes
+          </a>
+          
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Meilleures_pratiques_et_recommandations.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Meilleures pratiques et recommandations
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Sécurité.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Sécurité
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/trident-2301/pdfs/sidebar/Référence.pdf" 
+            
+          >
+            <img src="/fr-fr/trident-2301/images/pdf.png" alt="" width="16" height="16"/>
+            Référence
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+</li></ul>
+  <div class="zip-pdf-link-container" style="display: none;">   
+    <a href="#" id="zipPdf">
+      <img src="/fr-fr/trident-2301/images/pdf-zip.png" alt="" width="16" height="16"/>
+      <pre>Collection de documents PDF séparés<span class="zip-size"></span></pre>
+    </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+</div>
+<script>
+  $("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+  $("#toggleButtonPdf").click(function () {
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+  });
+</script><div class="prod-nav" id="product-nav">
+  <a target="_self" class="prod-fam-nav" href="https://docs.netapp.com/fr-fr/astra-family/"><img src="/fr-fr/trident-2301/images/left_arrow.png" alt=""><pre>Toute la documentation Astra</pre></a>
+</div><div class="sidebar-nav-container" id="mysidebardiv">
+  <ul id="mysidebar" class="nav"><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Documentation Astra Trident"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/index.html">
+        Documentation Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Notes de mise à jour"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-rn.html">
+        Notes de mise à jour
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Concepts"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Concepts</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Découvrez Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/intro.html">
+        Découvrez Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pilotes ONTAP"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/ontap-drivers.html">
+        Pilotes ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Provisionnement"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/provisioning.html">
+        Provisionnement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Snapshots de volume"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/snapshots.html">
+        Snapshots de volume
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pools virtuels"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/virtual-storage-pool.html">
+        Pools virtuels
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Groupes d'accès de volume"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-concepts/vol-access-groups.html">
+        Groupes d'accès de volume
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Commencez"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Commencez</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Essayez-le"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/quickstart.html">
+        Essayez-le
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="De formation"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/requirements.html">
+        De formation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Installer Astra Trident"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Installer Astra Trident</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de l'installation"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy.html">
+        Présentation de l'installation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Installer à l'aide de l'opérateur Trident"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Installer à l'aide de l'opérateur Trident</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement manuel de l'opérateur Trident (standard)"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy-operator.html">
+        Déploiement manuel de l'opérateur Trident (standard)
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement manuel de l'opérateur Trident (hors ligne)"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy-operator-mirror.html">
+        Déploiement manuel de l'opérateur Trident (hors ligne)
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utilisation du graphique Helm Trident (standard)"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy-helm.html">
+        Utilisation du graphique Helm Trident (standard)
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utilisation du graphique Trident Helm (hors ligne)"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy-helm-mirror.html">
+        Utilisation du graphique Trident Helm (hors ligne)
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Personnalisez l'installation de l'opérateur Trident"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-customize-deploy.html">
+        Personnalisez l'installation de l'opérateur Trident
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Installation à l'aide de tridentctl"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Installation à l'aide de tridentctl</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Installation à l'aide de tridentctl"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-deploy-tridentctl.html">
+        Installation à l'aide de tridentctl
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Personnalisez l'installation tridentctl"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-customize-deploy-tridentctl.html">
+        Personnalisez l'installation tridentctl
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Et la suite ?"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-get-started/kubernetes-postdeployment.html">
+        Et la suite ?
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Gérez Astra Trident"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Gérez Astra Trident</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mettez à niveau Astra Trident"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Mettez à niveau Astra Trident</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de la mise à niveau"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-managing-k8s/upgrade-trident.html">
+        Présentation de la mise à niveau
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mise à niveau avec l'opérateur"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-managing-k8s/upgrade-operator.html">
+        Mise à niveau avec l'opérateur
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mise à niveau avec tridentctl"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-managing-k8s/upgrade-tridentctl.html">
+        Mise à niveau avec tridentctl
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Désinstaller Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-managing-k8s/uninstall-trident.html">
+        Désinstaller Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Revenir à la version antérieure d'Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-managing-k8s/downgrade-trident.html">
+        Revenir à la version antérieure d'Astra Trident
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Avec Astra Trident"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Avec Astra Trident</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Préparez le nœud de travail"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/worker-node-prep.html">
+        Préparez le nœud de travail
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration des systèmes back-end"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="/fr-fr/trident-2301/trident-use/backends.html">
+        <div class="na-navbar-padding"> Configuration des systèmes back-end</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Azure NetApp Files"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Azure NetApp Files</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/anf.html">
+        Présentation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Préparez la configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/anf-prep.html">
+        Préparez la configuration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exemples et options de configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/anf-examples.html">
+        Exemples et options de configuration
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Cloud Volumes Service pour Google Cloud"
+      data-li-level="3#" 
+      class="  active "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/gcp.html">
+        Cloud Volumes Service pour Google Cloud
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="NetApp HCI ou SolidFire"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/element.html">
+        NetApp HCI ou SolidFire
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pilotes SAN de ONTAP"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="/fr-fr/trident-2301/trident-use/ontap-san.html">
+        <div class="na-navbar-padding"> Pilotes SAN de ONTAP</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Préparez la configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/ontap-san-prep.html">
+        Préparez la configuration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exemples et options de configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/ontap-san-examples.html">
+        Exemples et options de configuration
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pilotes NAS ONTAP"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="/fr-fr/trident-2301/trident-use/ontap-nas.html">
+        <div class="na-navbar-padding"> Pilotes NAS ONTAP</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Préparez la configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/ontap-nas-prep.html">
+        Préparez la configuration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exemples et options de configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/ontap-nas-examples.html">
+        Exemples et options de configuration
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Amazon FSX pour NetApp ONTAP"
+      data-li-level="3" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Amazon FSX pour NetApp ONTAP</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/trident-fsx.html">
+        Présentation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Intégration d'Amazon FSX pour ONTAP"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/trident-fsx-prep.html">
+        Intégration d'Amazon FSX pour ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exemples et options de configuration"
+      data-li-level="4#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/trident-fsx-examples.html">
+        Exemples et options de configuration
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Création de systèmes back-end avec kubectl"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/backend-kubectl.html">
+        Création de systèmes back-end avec kubectl
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Effectuer la gestion back-end avec kubectl"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/backend_ops_kubectl.html">
+        Effectuer la gestion back-end avec kubectl
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Gestion back-end avec tridentctl"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/backend_ops_tridentctl.html">
+        Gestion back-end avec tridentctl
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Passez d'une option de gestion back-end à une autre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/backend_options.html">
+        Passez d'une option de gestion back-end à une autre
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Gérer les classes de stockage"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/manage-stor-class.html">
+        Gérer les classes de stockage
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Réaliser des opérations de volume"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="/fr-fr/trident-2301/trident-use/vol-operations.html">
+        <div class="na-navbar-padding"> Réaliser des opérations de volume</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utiliser la topologie CSI"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/csi-topology.html">
+        Utiliser la topologie CSI
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Travailler avec des instantanés"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/vol-snapshots.html">
+        Travailler avec des instantanés
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Développement des volumes"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/vol-expansion.html">
+        Développement des volumes
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Importer des volumes"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/vol-import.html">
+        Importer des volumes
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Partage des volumes NFS entre les espaces de noms"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/volume-share.html">
+        Partage des volumes NFS entre les espaces de noms
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Contrôle d'Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-use/monitor-trident.html">
+        Contrôle d'Astra Trident
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Astra Trident pour Docker"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Astra Trident pour Docker</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Conditions préalables au déploiement"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/prereqs-docker.html">
+        Conditions préalables au déploiement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/deploy-docker.html">
+        Déployez Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mise à niveau ou désinstallation de Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/upgrade-uninstall-docker.html">
+        Mise à niveau ou désinstallation de Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utilisation de volumes"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="/fr-fr/trident-2301/trident-docker/volumes-docker.html">
+        <div class="na-navbar-padding"> Utilisation de volumes</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Options de volume spécifiques au conducteur"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/volume-driver-options.html">
+        Options de volume spécifiques au conducteur
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Collecte des journaux"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/collect-logs-docker.html">
+        Collecte des journaux
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Gérez plusieurs instances Trident d'Astra"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/multiple-instances-docker.html">
+        Gérez plusieurs instances Trident d'Astra
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Options de configuration du stockage"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/stor-config.html">
+        Options de configuration du stockage
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Problèmes connus"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-docker/known-issues-docker.html">
+        Problèmes connus
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="FAQ"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/faq.html">
+        FAQ
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Assistance"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/get-help.html">
+        Assistance
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Dépannage"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/troubleshooting.html">
+        Dépannage
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Meilleures pratiques et recommandations"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Meilleures pratiques et recommandations</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/deploy-reco.html">
+        Déploiement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration de stockage sous-jacente"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/storage-config-best-practices.html">
+        Configuration de stockage sous-jacente
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Intégration d'Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/integrate-trident.html">
+        Intégration d'Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Protection des données"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/backup.html">
+        Protection des données
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sécurité"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Sécurité</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Recommandations en matière de sécurité"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/security-reco.html">
+        Recommandations en matière de sécurité
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration de clé unifiée Linux (LUKS)"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reco/security-luks.html">
+        Configuration de clé unifiée Linux (LUKS)
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Référence"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Référence</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ports Trident d'Astra"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/ports.html">
+        Ports Trident d'Astra
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="API REST d'Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/rest-api.html">
+        API REST d'Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Options de ligne de commande"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/trident-cl.html">
+        Options de ligne de commande
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Produits NetApp intégrés avec Kubernetes"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/k8s-netapp.html">
+        Produits NetApp intégrés avec Kubernetes
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Kubernetes et objets Astra Trident"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/objects.html">
+        Kubernetes et objets Astra Trident
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="commandes et options tridentctl"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/tridentctl.html">
+        commandes et options tridentctl
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Normes de sécurité de pod (PSS) et contraintes de contexte de sécurité (SCC)"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/trident-reference/pod-security.html">
+        Normes de sécurité de pod (PSS) et contraintes de contexte de sécurité (SCC)
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Versions antérieures"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/earlier-versions.html">
+        Versions antérieures
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mentions légales"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/trident-2301/legal-notices.html">
+        Mentions légales
+      </a></li></ul>
+</div>
+<script>
+  window.onscroll = () => {
+    const value = -40 - (document.body.scrollHeight - (window.innerHeight + document.scrollingElement.scrollTop));
+    
+    document.getElementById("sidebar-height").style.bottom = Math.max(0,value) + "px";
+};
+</script>
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+<script>$("#mysidebar li.active").parents('ul').css("display","block");</script>
+
+
+  </div>
+  
+
+  <div class="ie-content-pane n-doc__component-detail-content n-doc__component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <div class="ie-utility">
+  <button id="btn-sidebar-expand" onclick="showSidebar()"><img src="/fr-fr/trident-2301/images/expand.png" alt="Développer le panneau de navigation"></button>
+  <div class="ie-menu">
+    <div class="n-breadcrumb">
+      <ul class="n-breadcrumb__list">
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com">docs.netapp.com</a>
+        </li>
+        
+
+        
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com/fr-fr/astra-family/">Astra</a>
+        </li>
+        
+
+        <li class="n-breadcrumb__list-item">
+          <a href="/fr-fr/trident-2301/">Astra&nbsp;Trident</a>
+        </li>
+
+      </ul>
+    </div>
+    <div style="clear: both"></div><!-- Main needs to have height -->
+  </div>
+</div>
+
+      <div class="ie-nmt-disclaimer">
+  <span>
+    <div class="ie-nmt-disclaimer-container">
+      <div class="ie-nmt-disclaimer-icon">
+        <svg class="luci-icon" aria-hidden="true">
+          <use xlink:href="/fr-fr/trident-2301/images/sprite.svg#circle-info">
+        </svg>
+      </div>
+      <div class="ie-nmt-disclaimer-content">
+        <span> La version française est une traduction automatique. La version anglaise prévaut sur la française en cas de divergence. </span>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </span>
+</div><div class="n-doc__component-detail-heading-wrap">
+  <h1 class="n-doc__component-detail-heading">Configurer un système Cloud Volumes Service pour Google Cloud backend</h1>
+</div>
+
+
+<p class="page-details">
+  
+    
+    <time datetime="2023-04-27 16:55:21 +0000">04/27/2023</time>
+    
+  
+
+<span>Contributeurs
+</span>
+
+
+</p>
+
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Découvrez comment configurer NetApp Cloud Volumes Service pour Google Cloud en tant que backend pour votre installation d&#8217;Astra Trident à l&#8217;aide des exemples de configuration fournis.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="en-savoir-plus-sur-la-prise-en-charge-dastra-trident-pour-cloud-volumes-service-pour-google-cloud">En savoir plus sur la prise en charge d&#8217;Astra Trident pour Cloud Volumes Service pour Google Cloud</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Astra Trident peut créer des volumes Cloud Volumes Service dans un des deux <a href="https://cloud.google.com/architecture/partners/netapp-cloud-volumes/service-types" target="_blank" rel="noopener">"types de service"</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CVS-Performance</strong> : le type de service Astra Trident par défaut. Ce type de service aux performances optimisées est parfaitement adapté aux charges de travail de production qui exigent des performances élevées. Le type de service CVS-Performance est une option matérielle prenant en charge les volumes d&#8217;une taille minimale de 100 Gio. Vous pouvez choisir l&#8217;une des options <a href="https://cloud.google.com/architecture/partners/netapp-cloud-volumes/service-levels#service_levels_for_the_cvs-performance_service_type" target="_blank" rel="noopener">"trois niveaux de service"</a>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>standard</code></p>
+</li>
+<li>
+<p><code>premium</code></p>
+</li>
+<li>
+<p><code>extreme</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>CVS</strong>: Le type de service CVS fournit une haute disponibilité zonale avec des niveaux de performance limités à modérés. Le type de service CVS est une option logicielle utilisant des pools de stockage pour prendre en charge des volumes de 1 Gio. Le pool de stockage peut contenir jusqu&#8217;à 50 volumes dans lesquels tous les volumes partagent la capacité et les performances du pool. Vous pouvez choisir l&#8217;une des options <a href="https://cloud.google.com/architecture/partners/netapp-cloud-volumes/service-levels#service_levels_for_the_cvs_service_type" target="_blank" rel="noopener">"deux niveaux de service"</a>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>standardsw</code></p>
+</li>
+<li>
+<p><code>zoneredundantstandardsw</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Ce dont vous avez besoin</div>
+<p>Pour configurer et utiliser le <a href="https://cloud.netapp.com/cloud-volumes-service-for-gcp?utm_source=NetAppTrident_ReadTheDocs&amp;utm_campaign=Trident" target="_blank" rel="noopener">"Cloud Volumes Service pour Google Cloud"</a> back-end, vous avez besoin des éléments suivants :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Un compte Google Cloud configuré avec NetApp Cloud Volumes Service</p>
+</li>
+<li>
+<p>Numéro de projet de votre compte Google Cloud</p>
+</li>
+<li>
+<p>Compte de service Google Cloud avec le <code>netappcloudvolumes.admin</code> rôle</p>
+</li>
+<li>
+<p>Fichier de clé API pour votre compte Cloud Volumes Service</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="options-de-configuration-du-back-end">Options de configuration du back-end</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Chaque back-end provisionne les volumes dans une seule région Google Cloud. Pour créer des volumes dans d&#8217;autres régions, vous pouvez définir des systèmes back-end supplémentaires.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètre</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Valeur par défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>version</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Toujours 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>storageDriverName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom du pilote de stockage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« gcp-cvs »</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>backendName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom personnalisé ou système back-end de stockage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom du pilote + "_" + partie de la clé API</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>storageClass</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Paramètre facultatif utilisé pour spécifier le type de service CVS. Utiliser <code>software</code> Pour sélectionner le type de service CVS. Sinon, Astra Trident suppose un type de service CVS-Performance (<code>hardware</code>).</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>storagePools</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type de service CVS uniquement. Paramètre facultatif utilisé pour spécifier les pools de stockage pour la création du volume.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numéro de projet de compte Google Cloud. La valeur est disponible sur la page d&#8217;accueil du portail Google Cloud.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hostProjectNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requis si l&#8217;utilisation d&#8217;un réseau VPC partagé. Dans ce scénario, <code>projectNumber</code> est le projet de service, et <code>hostProjectNumber</code> est le projet hôte.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apiRegion</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Région Google Cloud dans laquelle Astra Trident crée des volumes Cloud Volumes Service. Lors de la création de clusters Kubernetes inter-région, de volumes créés dans un <code>apiRegion</code> Peut être utilisé pour des charges de travail planifiées sur des nœuds sur plusieurs régions Google Cloud. Le trafic entre les régions coûte plus cher.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apiKey</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clé API pour le compte de service Google Cloud avec le <code>netappcloudvolumes.admin</code> rôle. Il inclut le contenu au format JSON du fichier de clé privée d&#8217;un compte de service Google Cloud (copié en compte dans le fichier de configuration back-end).</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxyURL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL proxy si le serveur proxy doit se connecter au compte CVS. Le serveur proxy peut être un proxy HTTP ou HTTPS. Pour un proxy HTTPS, la validation du certificat est ignorée pour permettre l&#8217;utilisation de certificats auto-signés dans le serveur proxy. Les serveurs proxy avec authentification activée ne sont pas pris en charge.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nfsMountOptions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contrôle précis des options de montage NFS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« nfsvers=3 »</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>limitVolumeSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Echec du provisionnement si la taille du volume demandé est supérieure à cette valeur.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« » (non appliqué par défaut)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serviceLevel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Niveau de service CVS-Performance ou CVS pour les nouveaux volumes. Les valeurs CVS-Performance sont <code>standard</code>, <code>premium</code>, ou <code>extreme</code>. Les valeurs CVS sont <code>standardsw</code> ou <code>zoneredundantstandardsw</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CVS-Performance par défaut est « standard ». CVS default est "standardsw".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>network</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Réseau Google Cloud utilisé pour les volumes Cloud Volumes Service.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« par défaut »</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>debugTraceFlags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicateurs de débogage à utiliser lors du dépannage. Exemple <code>\{"api":false, "method":true}</code>. Ne l&#8217;utilisez pas à moins que vous ne soyez en mesure de résoudre les problèmes et que vous ayez besoin d&#8217;un vidage détaillé des journaux.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nul</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allowedTopologies</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pour activer l&#8217;accès inter-région, votre définition de classe de stockage pour <code>allowedTopologies</code> doit inclure toutes les régions. Par exemple :<br>
+<code>- key: topology.kubernetes.io/region<br>
+  values:<br>
+  - us-east1<br>
+  - europe-west1</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="options-de-provisionnement-de-volumes">Options de provisionnement de volumes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vous pouvez contrôler le provisionnement de volume par défaut dans le <code>defaults</code> section du fichier de configuration.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètre</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Valeur par défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exportRule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Règles d&#8217;exportation pour les nouveaux volumes. Doit être une liste séparée par des virgules d&#8217;une combinaison d&#8217;adresses IPv4 ou de sous-réseaux IPv4 en notation CIDR.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« 0.0.0.0/0 »</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>snapshotDir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accès au <code>.snapshot</code> répertoire</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« faux »</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>snapshotReserve</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pourcentage de volume réservé pour les snapshots</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">« » (Accepter CVS par défaut de 0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La taille des nouveaux volumes. CVS-Performance minimum est de 100 Gio. CVS est au minimum de 1 Gio.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Le type de service CVS-Performance utilise par défaut « 100 Gio ». Le type de service CVS n&#8217;est pas défini par défaut mais nécessite au moins 1 Gio.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exemples-de-type-de-service-cvs-performance">Exemples de type de service CVS-Performance</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les exemples suivants fournissent des exemples de configuration pour le type de service CVS-Performance.</p>
+</div>
+<details>
+<summary class="title">Exemple 1 : configuration minimale</summary>
+<div class="content">
+<div class="paragraph">
+<p>Il s&#8217;agit de la configuration back-end minimale avec le type de service CVS-Performance par défaut et le niveau de service « standard » par défaut.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>---
+version: 1
+storageDriverName: gcp-cvs
+projectNumber: '012345678901'
+apiRegion: us-west2
+apiKey:
+  type: service_account
+  project_id: my-gcp-project
+  private_key_id: "&lt;id_value&gt;"
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    XsYg6gyxy4zq7OlwWgLwGa==
+    -----END PRIVATE KEY-----
+  client_email: cloudvolumes-admin-sa@my-gcp-project.iam.gserviceaccount.com
+  client_id: '123456789012345678901'
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/cloudvolumes-admin-sa%40my-gcp-project.iam.gserviceaccount.com</pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Exemple 2 : configuration du niveau de service</summary>
+<div class="content">
+<div class="paragraph">
+<p>Dans cet exemple, nous présentons les options de configuration du back-end, y compris les niveaux de service et les valeurs par défaut des volumes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>---
+version: 1
+storageDriverName: gcp-cvs
+projectNumber: '012345678901'
+apiRegion: us-west2
+apiKey:
+  type: service_account
+  project_id: my-gcp-project
+  private_key_id: "&lt;id_value&gt;"
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    XsYg6gyxy4zq7OlwWgLwGa==
+    -----END PRIVATE KEY-----
+  client_email: cloudvolumes-admin-sa@my-gcp-project.iam.gserviceaccount.com
+  client_id: '123456789012345678901'
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/cloudvolumes-admin-sa%40my-gcp-project.iam.gserviceaccount.com
+proxyURL: http://proxy-server-hostname/
+nfsMountOptions: vers=3,proto=tcp,timeo=600
+limitVolumeSize: 10Ti
+serviceLevel: premium
+defaults:
+  snapshotDir: 'true'
+  snapshotReserve: '5'
+  exportRule: 10.0.0.0/24,10.0.1.0/24,10.0.2.100
+  size: 5Ti</pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Exemple 3 : configuration de pool virtuel</summary>
+<div class="content">
+<div class="paragraph">
+<p>Utilisation de cet échantillon <code>storage</code> pour configurer des pools virtuels et <code>StorageClasses</code> cela leur renvoie. Reportez-vous à la section <a href="#définitions-des-classes-de-stockage">Définitions des classes de stockage</a> pour voir comment les classes de stockage ont été définies.</p>
+</div>
+<div class="paragraph">
+<p>Ici, des valeurs par défaut spécifiques sont définies pour tous les pools virtuels, qui définissent le <code>snapshotReserve</code> à 5 % et le <code>exportRule</code> à 0.0.0.0/0. Les pools virtuels sont définis dans le <code>storage</code> section. Chaque pool virtuel individuel définit sa propre définition <code>serviceLevel</code>, et certains pools remplacent les valeurs par défaut. Des étiquettes de pools virtuels ont été utilisées pour différencier les pools en fonction de <code>performance</code> et <code>protection</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>---
+version: 1
+storageDriverName: gcp-cvs
+projectNumber: '012345678901'
+apiRegion: us-west2
+apiKey:
+  type: service_account
+  project_id: my-gcp-project
+  private_key_id: "&lt;id_value&gt;"
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    XsYg6gyxy4zq7OlwWgLwGa==
+    -----END PRIVATE KEY-----
+  client_email: cloudvolumes-admin-sa@my-gcp-project.iam.gserviceaccount.com
+  client_id: '123456789012345678901'
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/cloudvolumes-admin-sa%40my-gcp-project.iam.gserviceaccount.com
+nfsMountOptions: vers=3,proto=tcp,timeo=600
+defaults:
+  snapshotReserve: '5'
+  exportRule: 0.0.0.0/0
+labels:
+  cloud: gcp
+region: us-west2
+storage:
+- labels:
+    performance: extreme
+    protection: extra
+  serviceLevel: extreme
+  defaults:
+    snapshotDir: 'true'
+    snapshotReserve: '10'
+    exportRule: 10.0.0.0/24
+- labels:
+    performance: extreme
+    protection: standard
+  serviceLevel: extreme
+- labels:
+    performance: premium
+    protection: extra
+  serviceLevel: premium
+  defaults:
+    snapshotDir: 'true'
+    snapshotReserve: '10'
+- labels:
+    performance: premium
+    protection: standard
+  serviceLevel: premium
+- labels:
+    performance: standard
+  serviceLevel: standard</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="sect2">
+<h3 id="définitions-des-classes-de-stockage">Définitions des classes de stockage</h3>
+<div class="paragraph">
+<p>Les définitions de classe de stockage suivantes s&#8217;appliquent à l&#8217;exemple de configuration de pool virtuel. À l&#8217;aide de <code>parameters.selector</code>, Vous pouvez spécifier pour chaque classe de stockage le pool virtuel utilisé pour héberger un volume. Les aspects définis dans le pool sélectionné seront définis pour le volume.</p>
+</div>
+<details>
+<summary class="title">Exemple de classe de stockage</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-extreme-extra-protection
+provisioner: netapp.io/trident
+parameters:
+  selector: "performance=extreme; protection=extra"
+allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-extreme-standard-protection
+provisioner: netapp.io/trident
+parameters:
+  selector: "performance=premium; protection=standard"
+allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-premium-extra-protection
+provisioner: netapp.io/trident
+parameters:
+  selector: "performance=premium; protection=extra"
+allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-premium
+provisioner: netapp.io/trident
+parameters:
+  selector: "performance=premium; protection=standard"
+allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-standard
+provisioner: netapp.io/trident
+parameters:
+  selector: "performance=standard"
+allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cvs-extra-protection
+provisioner: netapp.io/trident
+parameters:
+  selector: "protection=extra"
+allowVolumeExpansion: true</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="ulist">
+<ul>
+<li>
+<p>La première classe de stockage (<code>cvs-extreme-extra-protection</code>) correspond au premier pool virtuel. Il s&#8217;agit du seul pool offrant des performances extrêmes avec une réserve Snapshot de 10 %.</p>
+</li>
+<li>
+<p>La dernière classe de stockage (<code>cvs-extra-protection</code>) appelle tout pool de stockage qui fournit une réserve d&#8217;instantanés de 10%. Astra Trident décide du pool virtuel sélectionné et s&#8217;assure que les exigences de la réserve de snapshots sont respectées.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exemples-de-type-de-service-cvs">Exemples de type de service CVS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les exemples suivants fournissent des exemples de configuration pour le type de service CVS.</p>
+</div>
+<details>
+<summary class="title">Exemple 1 : configuration minimale</summary>
+<div class="content">
+<div class="paragraph">
+<p>Il s&#8217;agit de la configuration back-end minimale utilisant <code>storageClass</code> Pour spécifier le type de service CVS et la valeur par défaut <code>standardsw</code> niveau de service.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>---
+version: 1
+storageDriverName: gcp-cvs
+projectNumber: '012345678901'
+storageClass: software
+apiRegion: us-east4
+apiKey:
+  type: service_account
+  project_id: my-gcp-project
+  private_key_id: "&lt;id_value&gt;"
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    znHczZsrrtHisIsAbOguSaPIKeyAZNchRAGzlzZE4jK3bl/qp8B4Kws8zX5ojY9m
+    XsYg6gyxy4zq7OlwWgLwGa==
+    -----END PRIVATE KEY-----
+  client_email: cloudvolumes-admin-sa@my-gcp-project.iam.gserviceaccount.com
+  client_id: '123456789012345678901'
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/cloudvolumes-admin-sa%40my-gcp-project.iam.gserviceaccount.com
+serviceLevel: standardsw</pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Exemple 2 : configuration du pool de stockage</summary>
+<div class="content">
+<div class="paragraph">
+<p>Cet exemple de configuration back-end utilise <code>storagePools</code> pour configurer un pool de stockage.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>---
+version: 1
+storageDriverName: gcp-cvs
+backendName: gcp-std-so-with-pool
+projectNumber: '531265380079'
+apiRegion: europe-west1
+apiKey:
+  type: service_account
+  project_id: cloud-native-data
+  private_key_id: "&lt;id_value&gt;"
+  private_key: |-
+    -----BEGIN PRIVATE KEY-----
+    MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDaT+Oui9FBAw19
+    L1AGEkrYU5xd9K5NlO5jMkIFND5wCD+Nv+jd1GvtFRLaLK5RvXyF5wzvztmODNS+
+    qtScpQ+5cFpQkuGtv9U9+N6qtuVYYO3b504Kp5CtqVPJCgMJaK2j8pZTIqUiMum/
+    5/Y9oTbZrjAHSMgJm2nHzFq2X0rqVMaHghI6ATm4DOuWx8XGWKTGIPlc0qPqJlqS
+    LLaWOH4VIZQZCAyW5IUp9CAmwqHgdG0uhFNfCgMmED6PBUvVLsLvcq86X+QSWR9k
+    ETqElj/sGCenPF7ti1DhGBFafd9hPnxg9PZY29ArEZwY9G/ZjZQX7WPgs0VvxiNR
+    DxZRC3GXAgMBAAECggEACn5c59bG/qnVEVI1CwMAalM5M2z09JFhlLlljKwntNPj
+    Vilw2eTW2+UE7HbJru/S7KQgA5Dnn9kvCraEahPRuddUMrD0vG4kTl/IODV6uFuk
+    Y0sZfbqd4jMUQ21smvGsqFzwloYWS5qzO1W83ivXH/HW/iqkmY2eW+EPRS/hwSSu
+    SscR+SojI7PB0BWSJhlV4yqYf3vcD/D95el2CVHfRCkL85DKumeZ+yHEnpiXGZAE
+    t8xSs4a5OOPm6NHhevCw2a/UQ95/foXNUR450HtbjieJo5o+FF6EYZQGfU2ZHZO8
+    37FBKuaJkdGW5xqaI9TL7aqkGkFMF4F2qvOZM+vy8QKBgQD4oVuOkJDlhkTHP86W
+    esFlw1kpWyJR9ZA7LI0g/rVpslnX+XdDq0WQf4umdLNau5hYEH9LU6ZSGs1Xk3/B
+    NHwR6OXFuqEKNiu83d0zSlHhTy7PZpOZdj5a/vVvQfPDMz7OvsqLRd7YCAbdzuQ0
+    +Ahq0Ztwvg0HQ64hdW0ukpYRRwKBgQDgyHj98oqswoYuIa+pP1yS0pPwLmjwKyNm
+    /HayzCp+Qjiyy7Tzg8AUqlH1Ou83XbV428jvg7kDhO7PCCKFq+mMmfqHmTpb0Maq
+    KpKnZg4ipsqP1yHNNEoRmcailXbwIhCLewMqMrggUiLOmCw4PscL5nK+4GKu2XE1
+    jLqjWAZFMQKBgFHkQ9XXRAJ1kR3XpGHoGN890pZOkCVSrqju6aUef/5KYlFCt8ew
+    F/+aIxM2iQSvmWQYOvVCnhuY/F2GFaQ7d0om3decuwI0CX/xy7PjHMkLXa2uaZs4
+    WR17sLduj62RqXRLX0c0QkwBiNFyHbRcpdkZJQujbYMhBa+7j7SxT4BtAoGAWMWT
+    UucocRXZm/pdvz9wteNH3YDWnJLMxm1KC06qMXbBoYrliY4sm3ywJWMC+iCd/H8A
+    Gecxd/xVu5mA2L2N3KMq18Zhz8Th0G5DwKyDRJgOQ0Q46yuNXOoYEjlo4Wjyk8Me
+    +tlQ8iK98E0UmZnhTgfSpSNElbz2AqnzQ3MN9uECgYAqdvdVPnKGfvdtZ2DjyMoJ
+    E89UIC41WjjJGmHsd8W65+3X0RwMzKMT6aZc5tK9J5dHvmWIETnbM+lTImdBBFga
+    NWOC6f3r2xbGXHhaWSl+nobpTuvlo56ZRJVvVk7lFMsiddzMuHH8pxfgNJemwA4P
+    ThDHCejv035NNV6KyoO0tA==
+    -----END PRIVATE KEY-----
+  client_email: cloudvolumes-admin-sa@cloud-native-data.iam.gserviceaccount.com
+  client_id: '107071413297115343396'
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/cloudvolumes-admin-sa%40cloud-native-data.iam.gserviceaccount.com
+storageClass: software
+zone: europe-west1-b
+network: default
+storagePools:
+- 1bc7f380-3314-6005-45e9-c7dc8c2d7509
+serviceLevel: Standardsw</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="et-la-suite">Et la suite ?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Après avoir créé le fichier de configuration backend, exécutez la commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>tridentctl create backend -f &lt;backend-file&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Si la création du back-end échoue, la configuration du back-end est erronée. Vous pouvez afficher les journaux pour déterminer la cause en exécutant la commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>tridentctl logs</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Après avoir identifié et corrigé le problème avec le fichier de configuration, vous pouvez exécuter de nouveau la commande create.</p>
+</div>
+</div>
+</div>
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+      <div class="n-footer__bottom-left">
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/copyright/">© 2023 NetApp, Inc.</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">Déclaration de confidentialité</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Déclaration sur les cookies</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Paramètres de cookies</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="n-footer__bottom-right">
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a target="_self" href="javascript:netapp_mailto()">Envoyer un avis à propos de cette page</a>
+            </li>
+          </ul>
+        </div>
+        <div class="n-footer__social-links">
+          <ul class="n-footer__social-link-list">
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-blog" href="https://blog.netapp.com"
+                target="_blank" title="blog" alt="blog">
+                <span class="n-footer__social-link-text">blog</span>
+                <svg class="n-icon-blog n-footer__social-link-icon" aria-labelledby="title">
+                  <title>blog@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#blog"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-community" href="https://community.netapp.com/"
+                target="_blank" title="community" alt="community">
+                <span class="n-footer__social-link-text">community</span>
+                <svg class="n-icon-community n-footer__social-link-icon" aria-labelledby="title">
+                  <title>community@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#comments"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-twitter" href="https://twitter.com/netapp"
+                target="_blank" title="twitter" alt="twitter">
+                <span class="n-footer__social-link-text">twitter</span>
+                <svg class="n-icon-twitter n-footer__social-link-icon" aria-labelledby="title">
+                  <title>twitter@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#twitter"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-facebook" href="https://www.facebook.com/NetApp"
+                target="_blank" title="facebook" alt="facebook">
+                <span class="n-footer__social-link-text">facebook</span>
+                <svg class="n-icon-facebook n-footer__social-link-icon" aria-labelledby="title">
+                  <title>facebook@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#facebook"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-linkedin"
+                href="https://www.linkedin.com/company/netapp" target="_blank" title="linkedin" alt="linkedin">
+                <span class="n-footer__social-link-text">linkedin</span>
+                <svg class="n-icon-linkedin n-footer__social-link-icon" aria-labelledby="title">
+                  <title>linkedin@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#linkedin"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-youtube"
+                href="https://www.youtube.com/user/NetAppTV" target="_blank" title="youtube" alt="youtube">
+                <span class="n-footer__social-link-text">youtube</span>
+                <svg class="n-icon-youtube n-footer__social-link-icon" aria-labelledby="title">
+                  <title>youtube@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#youtube"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-slideshare"
+                href="https://www.slideshare.net/NetApp" target="_blank" title="slideshare" alt="slideshare">
+                <span class="n-footer__social-link-text">slideshare</span>
+                <svg class="n-icon-slideshare n-footer__social-link-icon" aria-labelledby="title">
+                  <title>slideshare@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/trident-2301/images/sprite.svg#slideshare"></use>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/fr-fr/trident-2301/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/fr-fr/trident-2301/js/prism.js'></script>
+      <script type="text/javascript" src='/fr-fr/trident-2301/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/fr-fr/trident-2301/js/tabbed-blocks.js'></script>
+    <script src='/fr-fr/trident-2301/js/sidebar.js'></script>
+  </body></html>
