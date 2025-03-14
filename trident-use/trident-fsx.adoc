@@ -18,7 +18,7 @@ Un système de fichiers est la ressource principale d'Amazon FSX, similaire à u
 
 Avec Astra Trident avec Amazon FSX pour NetApp ONTAP, vous pouvez vous assurer que les clusters Kubernetes exécutés dans Amazon Elastic Kubernetes Service (EKS) peuvent provisionner des volumes persistants de bloc et de fichier sauvegardés par ONTAP.
 
-Utilisation d'Amazon FSX pour NetApp ONTAP https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-mgng-stor-tier-fp/GUID-5A78F93F-7539-4840-AB0B-4A6E3252CF84.html["FabricPool"^] pour gérer les niveaux de stockage. Elle vous permet de stocker les données au niveau le plus important, selon que celles-ci sont fréquemment utilisées.
+Amazon FSX pour NetApp ONTAP utilise https://docs.netapp.com/us-en/ontap/fabricpool/index.html["FabricPool"^] pour gérer les tiers de stockage. Elle vous permet de stocker les données au niveau le plus important, selon que celles-ci sont fréquemment utilisées.
 
 
 

@@ -45,7 +45,7 @@ Plusieurs options sont disponibles pour la gestion de la SVM :
 
 Dans chaque cas, l'interface doit être dans DNS et le nom DNS doit être utilisé lors de la configuration de Trident. Ainsi, certaines scénarios de reprise après incident, par exemple SVM-DR, sans conservation des identités de réseau.
 
-Il n'existe aucune préférence entre une LIF de gestion dédiée ou partagée pour le SVM, cependant, vous devez vous assurer que vos stratégies de sécurité réseau sont en adéquation avec l'approche de votre choix. Indépendamment de la situation, le LIF de gestion doit être accessible via DNS pour faciliter une flexibilité maximale https://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-dap/GUID-B9E36563-1C7A-48F5-A9FF-1578B99AADA9.html["SVM-DR"^] Utilisation en association avec Trident.
+Il n'existe aucune préférence entre une LIF de gestion dédiée ou partagée pour le SVM, cependant, vous devez vous assurer que vos stratégies de sécurité réseau sont en adéquation avec l'approche de votre choix. Quoi qu'il en soit, la LIF de gestion doit être accessible via DNS afin de faciliter une flexibilité maximale doit https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-svm-replication-concept.html["SVM-DR"^] être utilisée conjointement avec Trident.
 
 
 
@@ -88,7 +88,7 @@ Vous pouvez spécifier l'initiateur CHAP et les noms d'utilisateur et mots de pa
 
 === Création et utilisation d'une politique de QoS de SVM
 
-L'utilisation d'une politique de QoS de ONTAP appliquée au SVM limite le nombre de consommables d'IOPS par les volumes provisionnés par Trident. Cela permet de http://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-perf-mon/GUID-77DF9BAF-4ED7-43F6-AECE-95DFB0680D2F.html?cp=7_1_2_1_2["évitez un tyran"^] Ou un conteneur hors contrôle de affectant les charges de travail en dehors du SVM Trident.
+L'utilisation d'une politique de QoS de ONTAP appliquée au SVM limite le nombre de consommables d'IOPS par les volumes provisionnés par Trident. Cela permet à https://docs.netapp.com/us-en/ontap/performance-admin/guarantee-throughput-qos-task.html["évitez un tyran"^] ou à un conteneur hors contrôle d'affecter les charges de travail en dehors de la SVM Trident.
 
 Vous pouvez créer une politique de QoS pour la SVM en quelques étapes. Consultez la documentation de votre version de ONTAP pour obtenir des informations précises. L'exemple ci-dessous crée une politique de QoS qui limite le nombre total d'IOPS disponibles pour la SVM à 5000.
 
@@ -118,7 +118,7 @@ IMPORTANT: Vous devez affecter la « policy group » QoS à la SVM *Only* si la 
 
 === Création de groupes de règles de QoS pour Trident
 
-La qualité de service (QoS) garantit que les performances des workloads stratégiques ne sont pas dégradées par des charges de travail concurrentes. Les groupes de règles de QoS de ONTAP proposent des options de QoS pour les volumes et permettent aux utilisateurs de définir le plafond de débit pour une ou plusieurs charges de travail. Pour plus d'informations sur la QoS, voir https://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-perf-mon/GUID-77DF9BAF-4ED7-43F6-AECE-95DFB0680D2F.html["Débit garanti avec la QoS"^]. Vous pouvez spécifier des groupes de règles de QoS dans le back-end ou dans un pool de stockage, et ils sont appliqués à chaque volume créé dans ce pool ou back-end.
+La qualité de service (QoS) garantit que les performances des workloads stratégiques ne sont pas dégradées par des charges de travail concurrentes. Les groupes de règles de QoS de ONTAP proposent des options de QoS pour les volumes et permettent aux utilisateurs de définir le plafond de débit pour une ou plusieurs charges de travail. Pour plus d'informations sur QoS, voir https://docs.netapp.com/us-en/ontap/performance-admin/guarantee-throughput-qos-task.html["Débit garanti avec la QoS"^]. Vous pouvez spécifier des groupes de règles de QoS dans le back-end ou dans un pool de stockage, et ils sont appliqués à chaque volume créé dans ce pool ou back-end.
 
 ONTAP propose deux types de groupes de règles de QoS : classiques et évolutifs. Les groupes de règles classiques fournissent un débit minimal (ou minimal, dans les versions ultérieures) plat en IOPS. La QoS adaptative ajuste automatiquement le débit en fonction de la taille du workload. Elle maintient le rapport entre les IOPS et les To|Go en fonction de l'évolution de la taille du workload. Vous pouvez ainsi gérer des centaines, voire des milliers de charges de travail dans le cadre d'un déploiement à grande échelle.
 
@@ -152,7 +152,7 @@ storage:
 * Vous devez appliquer les « policy groups » par volume pour que chaque volume bénéficie de l'intégralité du débit spécifié par le « policy group ». Les groupes de stratégies partagés ne sont pas pris en charge.
 
 
-Pour plus d'informations sur les « policy Groups » de QoS, reportez-vous à la section https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-cmpr-980/TOC__qos.html["Commandes QoS de ONTAP 9.8"^].
+Pour plus d'informations sur les groupes de règles QoS, reportez-vous àla section https://docs.netapp.com/us-en/ontap-cli-98/index.html["Commandes QoS de ONTAP 9.8"^].
 
 
 
@@ -282,8 +282,8 @@ Une partie de la documentation sur les meilleures pratiques est présentée ci-d
 *ONTAP*
 
 * https://www.netapp.com/us/media/tr-4067.pdf["Guide des meilleures pratiques et de mise en œuvre de NFS"^]
-* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/home.html["Guide d'administration DU SAN"^] (Pour iSCSI)
-* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-iscsi-rhel-cg/home.html["Configuration iSCSI Express pour RHEL"^]
+* https://docs.netapp.com/us-en/ontap/san-admin/index.html["Gestion du stockage SAN"^] (Pour iSCSI)
+* https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["Configuration iSCSI Express pour RHEL"^]
 
 
 *Logiciel Element*
