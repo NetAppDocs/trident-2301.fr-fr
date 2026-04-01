@@ -155,10 +155,6 @@
   <block id="0e7629426b9d7596800cd5d72f558a7f" category="paragraph">Des miroirs de partage de charge peuvent être créés pour les volumes root des SVM qui fournissent des données sur NFS. ONTAP met automatiquement à jour les miroirs de partage de charge pour les volumes qui ont été créés par Trident. Cela peut entraîner des retards dans le montage des volumes. Lorsque plusieurs volumes sont créés via Trident, le provisionnement d'un volume dépend de la mise à jour par ONTAP du miroir de partage de charge.</block>
   <block id="0d3ef54a4cc337b5d907b6639e51c6d4" category="section-title">Comment puis-je séparer l'utilisation de la classe de stockage pour chaque client/locataire ?</block>
   <block id="fda1b35892cb6f61447f0e49415937d9" category="paragraph">Kubernetes n'autorise pas les classes de stockage dans les espaces de noms. Toutefois, vous pouvez utiliser Kubernetes pour limiter l'utilisation d'une classe de stockage spécifique par espace de noms à l'aide de quotas de ressources de stockage, qui sont par espace de noms. Pour refuser un accès d'espace de noms spécifique à un stockage spécifique, définissez le quota de ressources sur 0 pour cette classe de stockage.</block>
-  <block id="34c4dac14496e9c45d92f345d9392fc8" category="summary">La documentation relative aux versions précédentes d'Astra Trident est disponible au cas où vous n'exécutiez pas la dernière version.</block>
-  <block id="ba09ee47d11962c1ccd13d7e1f10e6c5" category="doc">Versions antérieures de la documentation</block>
-  <block id="3fe5d266a33f137293c314a2e334b611" category="inline-link">Astra Trident 22.10</block>
-  <block id="9fefe9ff51badc61edd8a36c8240aa29" category="list-text"><block ref="9fefe9ff51badc61edd8a36c8240aa29" category="inline-link-rx"></block></block>
   <block id="b928e0aee19c1e2cc91c85e8a0856936" category="summary">Utilisez les pointeurs indiqués ici pour résoudre les problèmes que vous pourriez rencontrer lors de l'installation et de l'utilisation d'Astra Trident.</block>
   <block id="231cf4c70d866b616c21baddaeed0696" category="doc">Dépannage</block>
   <block id="8ef0ab9bbedaa7608c9abed7c7213218" category="admonition">Pour obtenir de l'aide avec Astra Trident, créez un bundle de support à l'aide de<block ref="1d41e2024c69110ad6054ffc785ca8e0" prefix=" " category="inline-code"></block> et envoyez-le à<block ref="da34ca64df3f236a423516102d4096c2" prefix=" " category="inline-code"></block>.</block>
@@ -3376,8 +3372,6 @@
   <block id="56c34c6410dd45c5cec44149ad0ce037" category="section-title">Politique de confidentialité</block>
   <block id="c0227cef6f07a8cd2ac72f2945b031aa" category="section-title">Source ouverte</block>
   <block id="0172b29a9f5d94dc62ee592a98183f3b" category="paragraph">Vous pouvez consulter les informations de copyright et licences tierces utilisées dans le logiciel NetApp pour Astra Trident dans le fichier d'avis correspondant à chaque version, à l'adresse<block ref="4a3c8c5a408c6db1c44c04391a8a0a2f" category="inline-link-rx"></block>.</block>
-  <block id="1ee41f7caab6c354f41f4a101afa7e89" category="summary">Astra Trident est un mécanisme de provisionnement et d'orchestration open source du stockage géré par NetApp. Il vous permet de créer des volumes de stockage pour les applications conteneurisées gérées par Docker et Kubernetes. **Lisez les notes de mise à jour pour obtenir des informations essentielles sur la mise à niveau vers Astra Trident 23.01.1.**</block>
-  <block id="386e03ca533890432e529f451049f72e" category="doc">Documentation d'Astra Trident 23.01.1</block>
   <block id="c217b0ac2dd5504f79ba78b220a9c358" category="summary">NetApp prend en charge Trident de plusieurs façons. De nombreuses options d'auto-assistance gratuites sont disponibles 24 h/24 et 7 j/7, par exemple un canal de discorde.</block>
   <block id="db5eb84117d06047c97c9a0191b5fffe" category="doc">Assistance</block>
   <block id="14340f3a4eb25a54f8446036d807d7c8" category="paragraph">Astra Trident est un projet NetApp officiellement pris en charge. Vous pouvez contacter NetApp à l'aide de n'importe quel mécanisme standard et bénéficier d'un support haute performance adapté à vos besoins.</block>
@@ -3469,7 +3463,6 @@
   <block id="d3889fc650fa47326b5f1d0c56f50970" category="inline-link-macro">Normes de sécurité du pod</block>
   <block id="4e8effbd512bb14dbe10454c0f045ff2" category="paragraph">Une nouvelle <block ref="305368b4f0d008a807e095ab9da58448" category="inline-link-macro-rx"></block> (PSS) a été ajouté en détail les autorisations activées par Astra Trident lors de l'installation.</block>
   <block id="278dc4a29aa2b881b9dc4b45a82929c5" category="section-title">Changements en 22.04</block>
-  <block id="368b120a3b5f53a49dc3ab96ec9b8dbd" category="paragraph">NetApp améliore et améliore continuellement ses produits et services. Voici quelques-unes des nouveautés d'Astra Trident. Pour les versions précédentes, voir<block ref="25da125dffad1d6323c21354bccf0203" category="inline-link-rx"></block>.</block>
   <block id="7072ec708b0ea7e3243747d8b79c0d20" category="admonition">Si vous effectuez une mise à niveau à partir d'une version précédente de Trident et que vous utilisez Azure NetApp Files, le <block ref="d5189de027922f81005951e6efe0efd5" prefix="" category="inline-code"></block> le paramètre config est désormais un champ singleton obligatoire.</block>
   <block id="cb60f101c87f3def78d0fef168389244" category="inline-link-macro">Problème GitHub n° 681</block>
   <block id="2901fba3b85d37ea6000d90e72366ba6" category="list-text">Amélioration de l'analyse des noms d'initiateurs iSCSI. (<block ref="3947f141b94c1867221790f45a6ee173" category="inline-link-macro-rx"></block>)</block>
@@ -3576,7 +3569,6 @@
   <block id="8f5cc6430613f1c12f36965050bb7197" category="sidebar">Déroulez</block>
   <block id="d327e8f24b63b83e091dccdc48dd7b1b" category="sidebar">Documentation Astra Trident</block>
   <block id="483a5da192f46e3cfe8391d3ef234fc4" category="sidebar">FAQ</block>
-  <block id="93168a8084b3e838d2932c4734bd234e" category="sidebar">Versions antérieures</block>
   <block id="f1fe71442cd08e74d342114df7ee1551" category="sidebar">Installer Astra Trident</block>
   <block id="46921a75e8534ad7d1c379a9e3aec033" category="sidebar">Présentation de l'installation</block>
   <block id="3183dc3907c0b67930b221a316c94cb2" category="sidebar">Installer à l'aide de l'opérateur Trident</block>
@@ -3614,7 +3606,6 @@
   <block id="dd38f906b37d412de7d1c1dcf4cbf31c" category="paragraph"><block ref="dd38f906b37d412de7d1c1dcf4cbf31c" category="inline-link-macro-rx"></block></block>
   <block id="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-macro"><block ref="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-rx"></block></block>
   <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
-  <block id="198c02e905002edc550067c9d3bbfaef" category="paragraph">Si vous n'exécutez pas Astra Trident 23.01, la documentation relative aux versions précédentes est disponible.</block>
   <block id="430c6bcb8516befc45fb8173b0ca4e1f" category="list-text"><block ref="430c6bcb8516befc45fb8173b0ca4e1f" category="inline-link-rx"></block></block>
   <block id="d7d36869f2f4aa1eb99a10008e153f20" category="list-text"><block ref="d7d36869f2f4aa1eb99a10008e153f20" category="inline-link-rx"></block></block>
   <block id="f8b52d963f246a75dc6c8b78c954a4fd" category="list-text"><block ref="f8b52d963f246a75dc6c8b78c954a4fd" category="inline-link-rx"></block></block>
@@ -3635,4 +3626,7 @@
   <block id="15eaa3bd461b989a50d54376e8b82942" category="example-title">&lt;strong&gt;Gestion des clusters Kubernetes à l'aide de la NetApp Console&lt;/strong&gt;</block>
   <block id="28cfb8f261719a05032a41acccc32995" category="paragraph">Avec Astra Trident utilisant NetApp Console, vous pouvez mettre à niveau vers la dernière version d' Astra Trident, ajouter et gérer des classes de stockage et les connecter aux environnements de travail, et sauvegarder des volumes persistants à l'aide du Cloud Backup Service. La console prend en charge le déploiement d' Astra Trident à l'aide de l'opérateur Trident , manuellement ou à l'aide de Helm.</block>
   <block id="b09c1c20916b590511efd54db64df61c" category="paragraph">++ REMARQUE : Après l’exécution de cette commande, ONTAP vous invite à saisir un certificat. Collez le contenu du <block ref="0c7b1ee06b5fdaab7c83f24275255cf5" prefix=" " category="inline-code"></block> fichier généré à l’étape 1, puis appuyez sur <block ref="b1a326c06d88bf042f73d70f50197905" prefix=" " category="inline-code"></block> pour terminer l’installation.</block>
+  <block id="15bd21e4cb669eaf47cfec94c1119ed7" category="paragraph">NetApp améliore et perfectionne continuellement ses produits et services. Voici quelques-unes des dernières fonctionnalités d'Astra Trident. Pour les versions précédentes, consultez les versions antérieures de la documentation.</block>
+  <block id="1c731560e202d75e130c93bd193fc5c6" category="sidebar">Documentation Astra Trident 23.01</block>
+  <block id="66d4c5e9d694726c3898d052356d8a12" category="sidebar">Astra Trident est un outil open source de provisionnement et d'orchestration de stockage maintenu par NetApp. Il permet de créer des volumes de stockage pour les applications conteneurisées gérées par Docker et Kubernetes. **Consultez les notes de version pour obtenir des informations essentielles concernant la mise à niveau vers Astra Trident 23.01.**</block>
 </blocks>
